@@ -364,6 +364,9 @@ mod quantity;
 #[macro_use]
 mod unit;
 
+#[macro_use]
+mod traits;
+
 #[cfg(feature = "si")]
 #[macro_use]
 pub mod si;
