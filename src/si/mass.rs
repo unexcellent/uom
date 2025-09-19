@@ -57,4 +57,8 @@ quantity! {
          /// Ton Metric
         @ton: 1.0_E3; "t", "ton", "tons";
     }
+    constructor {
+        kg: kilogram,
+        g: gram,
+    }
 }

@@ -104,6 +104,9 @@ macro_rules! quantity {
             $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
                 $abbreviation:expr, $singular:expr, $plural:expr;)+
         }
+        $(constructor {
+            $($ctor_fn:ident : $ctor_ident:ident),+ $(,)?
+        })?
     ) => {
         mod __system {
             pub use super::super::*;
@@ -449,6 +452,24 @@ macro_rules! quantity {
                 }
             }
         }
+    $(
+    // Constructor helpers
+    use crate::traits::IntoF64;
+
+    paste::paste! {
+        /// Converts numeric inputs into the concrete f64 quantity using the given unit ctors.
+        pub trait [<Into $quantity>]: IntoF64 {
+            $(
+                #[inline]
+                fn $ctor_fn(&self) -> $crate::si::f64::$quantity {
+                    $crate::si::f64::$quantity::new::<$ctor_ident>(self.to_f64())
+                }
+            )+
+        }
+
+        impl [<Into $quantity>] for i32 {}
+    }
+)?
     };
 }
 

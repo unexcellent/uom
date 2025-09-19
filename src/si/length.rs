@@ -1,5 +1,4 @@
 //! Length (base unit meter, m).
-use crate::traits::IntoF64;
 
 quantity! {
     /// Length (base unit meter, m).
@@ -68,11 +67,10 @@ quantity! {
         @rod: 5.029_21_E0; "rd", "rod", "rods";
         @yard: 9.144_E-1; "yd", "yard", "yards";
     }
-}
-
-pub trait IntoLength: IntoF64 {
-    fn m(&self) -> crate::si::f64::Length {
-        crate::si::f64::Length::new::<meter>(self.to_f64())
+    constructor {
+        m: meter,
+        cm: centimeter,
+        mm: millimeter,
     }
 }
-impl IntoLength for i32 {}
+
