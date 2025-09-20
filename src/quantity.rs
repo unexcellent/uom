@@ -452,24 +452,36 @@ macro_rules! quantity {
                 }
             }
         }
-    $(
-    // Constructor helpers
-    use crate::traits::IntoF64;
-
-    paste::paste! {
-        /// Converts numeric inputs into the concrete f64 quantity using the given unit ctors.
-        pub trait [<Into $quantity>]: IntoF64 {
-            $(
-                #[inline]
-                fn $ctor_fn(&self) -> $crate::si::f64::$quantity {
-                    $crate::si::f64::$quantity::new::<$ctor_ident>(self.to_f64())
+        $(
+            use crate::traits::IntoF64;
+            paste::paste! {
+                /// Convert any number into a $quantity using the appropriate unit abbreviation.
+                pub trait [<Into $quantity>]: IntoF64 {
+                    $(
+                        #[inline]
+                        /// Construct a $quantity in $ctor_ident.
+                        fn $ctor_fn(&self) -> $crate::si::f64::$quantity {
+                            $crate::si::f64::$quantity::new::<$ctor_ident>(self.to_f64())
+                        }
+                    )+
                 }
-            )+
-        }
 
-        impl [<Into $quantity>] for i32 {}
-    }
-)?
+                impl [<Into $quantity>] for usize {}
+                impl [<Into $quantity>] for isize {}
+                impl [<Into $quantity>] for u8 {}
+                impl [<Into $quantity>] for u16 {}
+                impl [<Into $quantity>] for u32 {}
+                impl [<Into $quantity>] for u64 {}
+                impl [<Into $quantity>] for u128 {}
+                impl [<Into $quantity>] for i8 {}
+                impl [<Into $quantity>] for i16 {}
+                impl [<Into $quantity>] for i32 {}
+                impl [<Into $quantity>] for i64 {}
+                impl [<Into $quantity>] for i128 {}
+                impl [<Into $quantity>] for f32 {}
+                impl [<Into $quantity>] for f64 {}
+            }
+        )?
     };
 }
 

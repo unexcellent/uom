@@ -26,4 +26,8 @@ impl_into_f64!(i32);
 impl_into_f64!(i64);
 impl_into_f64!(i128);
 impl_into_f64!(f32);
-impl_into_f64!(f64);
+impl IntoF64 for f64 {
+    fn to_f64(&self) -> f64 {
+        *self
+    }
+}

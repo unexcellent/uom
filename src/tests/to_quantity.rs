@@ -1,11 +1,10 @@
-use crate::si::f64::{Length, Mass};
-use crate::si::length::IntoLength;
-use crate::si::length::{centimeter, meter, millimeter};
-use crate::si::mass::{gram, kilogram};
-use crate::si::mass::IntoMass;
-
 mod tests {
-    use super::*;
+    use crate::si::f64::{Length, Mass};
+    use crate::si::length::IntoLength;
+    use crate::si::length::{centimeter, meter, millimeter};
+    use crate::si::mass::IntoMass;
+    use crate::si::mass::{gram, kilogram};
+
 
     #[test]
     fn i32_to_length_in_meters() {
@@ -32,4 +31,8 @@ mod tests {
         assert_eq!(32.g(), Mass::new::<gram>(32.0))
     }
 
+    #[test]
+    fn f32_to_mass_grams() {
+        assert_eq!(32.6.g(), Mass::new::<gram>(32.6))
+    }
 }
